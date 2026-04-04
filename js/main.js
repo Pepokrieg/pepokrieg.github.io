@@ -23,15 +23,32 @@ const projects = [
     }
 ];
 
-// Función para cargar proyectos
+// Reemplaza la función loadProjects() con esta versión mejorada
 function loadProjects() {
     const projectsGrid = document.getElementById('projects-grid');
     
     if (!projectsGrid) return;
     
-    projectsGrid.innerHTML = projects.map(project => `
-        <div class="project-card">
-            <img src="${project.image}" alt="${project.title}" class="project-image" onerror="this.src='https://via.placeholder.com/400x250?text=Imagen+del+proyecto'">
+    // Limpiar el grid
+    projectsGrid.innerHTML = '';
+    
+    // Agregar cada proyecto con lazy loading
+    projects.forEach(project => {
+        const card = document.createElement('div');
+        card.className = 'project-card';
+        
+        const img = document.createElement('img');
+        img.className = 'project-image';
+        img.alt = project.title;
+        img.loading = 'lazy';  // Carga perezosa
+        img.src = project.image;
+        
+        // Si la imagen falla, mostrar placeholder
+        img.onerror = function() {
+            this.src = 'https://via.placeholder.com/400x250?text=' + encodeURIComponent(project.title);
+        };
+        
+        card.innerHTML = `
             <div class="project-info">
                 <h3 class="project-title">${project.title}</h3>
                 <p class="project-description">${project.description}</p>
@@ -40,8 +57,12 @@ function loadProjects() {
                 </div>
                 <a href="${project.link}" target="_blank" class="project-link">Ver en itch.io →</a>
             </div>
-        </div>
-    `).join('');
+        `;
+        
+        // Insertar imagen al principio
+        card.insertBefore(img, card.firstChild);
+        projectsGrid.appendChild(card);
+    });
 }
 
 // Función para cargar proyectos reales desde itch.io
