@@ -19,7 +19,7 @@ const projects = [
         description: "Arcade espacial con gráficos retro y jugabilidad adictiva.",
         image: "images/project3.jpg",
         tags: ["Unity", "2D", "Arcade"],
-        link: "https://pepokrieg.itch.io/space-shooter"
+        link: "https://pepokrieg.itch.io/wack-a-mole"
     }
 ];
 
