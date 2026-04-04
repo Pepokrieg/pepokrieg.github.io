@@ -1,24 +1,24 @@
 // Datos de proyectos desde itch.io
 const projects = [
     {
-        title: "Mi Primer Juego",
+        title: "Endless Running",
         description: "Un carrera infinita con mecánicas de aparición de obstáculos en filas y dificultad progresiva.",
         image: "images/project1.jpg",
         tags: ["Unity", "C#", "Plataformas"],
         link: "https://pepokrieg.itch.io/endless-running"
     },
     {
-        title: "Aventura Épica",
+        title: "Animal Hunger",
         description: "RPG con narrativa profunda y sistema de combate estratégico.",
         image: "images/project2.jpg",
-        tags: ["Unreal", "C++", "RPG"],
+        tags: ["Unity", "C#", "Shooter"],
         link: "https://pepokrieg.itch.io/animal-hunger"
     },
     {
-        title: "Space Shooter",
+        title: "Wack a Mole",
         description: "Arcade espacial con gráficos retro y jugabilidad adictiva.",
         image: "images/project3.jpg",
-        tags: ["Unity", "2D", "Arcade"],
+        tags: ["Unity", "C#", "Arcade"],
         link: "https://pepokrieg.itch.io/wack-a-mole"
     }
 ];
