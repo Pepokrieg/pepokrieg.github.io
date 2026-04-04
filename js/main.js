@@ -3,21 +3,21 @@ const projects = [
     {
         title: "Endless Running",
         description: "Un carrera infinita con mecánicas de aparición de obstáculos en filas y dificultad progresiva.",
-        image: "images/Endless_running.jpg",
+        image: "images/Endless_running.png",
         tags: ["Unity", "C#", "Plataformas"],
         link: "https://pepokrieg.itch.io/endless-running"
     },
     {
         title: "Animal Hunger",
         description: "RPG con narrativa profunda y sistema de combate estratégico.",
-        image: "images/animal_hunger.jpg",
+        image: "images/animal_hunger.png",
         tags: ["Unity", "C#", "Shooter"],
         link: "https://pepokrieg.itch.io/animal-hunger"
     },
     {
         title: "Wack a Mole",
         description: "Arcade espacial con gráficos retro y jugabilidad adictiva.",
-        image: "images/wackamole.jpg",
+        image: "images/wackamole.png",
         tags: ["Unity", "C#", "Arcade"],
         link: "https://pepokrieg.itch.io/wack-a-mole"
     }
