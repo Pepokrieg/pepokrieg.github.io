@@ -422,3 +422,52 @@ footer {
         justify-content: center;
     }
 }
+
+/* Corregir parpadeo en proyectos */
+.project-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    transition: var(--transition);
+    cursor: pointer;
+    /* AÑADE ESTAS LÍNEAS */
+    opacity: 1;
+    transform: none;
+    will-change: transform;
+}
+
+/* Prevenir parpadeo en imágenes */
+.project-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    background: #f0f0f0;
+    /* AÑADE ESTAS LÍNEAS */
+    image-rendering: crisp-edges;
+    display: block;
+}
+
+/* Contenedor estable para evitar reflow */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    padding: 0 20px;
+    /* AÑADE ESTA LÍNEA */
+    min-height: 400px;
+}
+
+/* Animación suave al cargar */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.project-card {
+    animation: fadeIn 0.5s ease forwards;
+}
