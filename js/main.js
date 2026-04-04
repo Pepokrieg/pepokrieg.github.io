@@ -2,17 +2,17 @@
 const projects = [
     {
         title: "Mi Primer Juego",
-        description: "Un emocionante juego de plataformas con mecánicas innovadoras y gráficos coloridos.",
+        description: "Un carrera infinita con mecánicas de aparición de obstáculos en filas y dificultad progresiva.",
         image: "images/project1.jpg",
         tags: ["Unity", "C#", "Plataformas"],
-        link: "https://pepokrieg.itch.io/mi-primer-juego"
+        link: "https://pepokrieg.itch.io/endless-running"
     },
     {
         title: "Aventura Épica",
         description: "RPG con narrativa profunda y sistema de combate estratégico.",
         image: "images/project2.jpg",
         tags: ["Unreal", "C++", "RPG"],
-        link: "https://pepokrieg.itch.io/aventura-epica"
+        link: "https://pepokrieg.itch.io/animal-hunger"
     },
     {
         title: "Space Shooter",
