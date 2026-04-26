@@ -92,8 +92,8 @@ function updateSliderPosition() {
     const track = document.getElementById('sliderTrack');
     if (!track || track.children.length === 0) return;
     
-    const cardWidth = track.children[0].offsetWidth;
-    const gap = 32; // El gap definido en CSS
+    const cardWidth = track.children[0].offsetWidth;  // Ancho de 1 tarjeta
+    const gap = 32;  // El gap definido en CSS
     const slideWidth = cardWidth + gap;
     
     track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;

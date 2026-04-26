@@ -491,7 +491,7 @@ footer {
 }
 
 .slider-track .project-card {
-    min-width: calc(100% - 0px);  /* Cambiado de 33.333% a 100% */
+    min-width: 100%;  /* Fuerza 1 tarjeta en todos los tamaños */
     flex-shrink: 0;
     margin-bottom: 10px;
 }
@@ -560,7 +560,7 @@ footer {
 /* Responsive: ajustar número de tarjetas visibles */
 @media (max-width: 768px) {
     .slider-track .project-card {
-        min-width: calc(100% - 0px);
+        min-width: 100%;  /* Ya debería estar así */
     }
     
     .slider-container {
@@ -574,11 +574,11 @@ footer {
     }
 }
 
-@media (min-width: 769px) and (max-width: 1199px) {
+/*@media (min-width: 769px) and (max-width: 1199px) {
     .slider-track .project-card {
         min-width: calc(50% - 16px);
     }
-}
+}*/
 
 /* Estilos para imágenes de proyectos */
 .project-image {
