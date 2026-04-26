@@ -177,6 +177,33 @@ nav {
     transform: translateY(-2px);
 }
 
+.btn.cv {
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn.cv:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Si quieres un estilo diferente para móviles */
+@media (max-width: 768px) {
+    .cta-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+    
+    .btn {
+        width: 80%;
+        margin: 0;
+    }
+}
+
 /* Projects Section - FONDO NEGRO */
 .projects {
     padding: 100px 0;
