@@ -44,9 +44,20 @@
         <section id="work" class="projects">
             <div class="container">
                 <h2>Proyectos Destacados</h2>
-                <div class="projects-grid" id="projects-grid">
-                    <!-- Los proyectos se cargarán dinámicamente con JavaScript -->
+                
+                <!-- Slider container -->
+                <div class="slider-container">
+                    <div class="slider-track" id="sliderTrack">
+                        <!-- Los proyectos se cargarán aquí dinámicamente -->
+                    </div>
+                    
+                    <!-- Botones de navegación -->
+                    <button class="slider-btn prev-btn" id="prevBtn">❮</button>
+                    <button class="slider-btn next-btn" id="nextBtn">❯</button>
                 </div>
+                
+                <!-- Puntos/dots de navegación -->
+                <div class="slider-dots" id="sliderDots"></div>
             </div>
         </section>
 
