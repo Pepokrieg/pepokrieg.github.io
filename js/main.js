@@ -166,12 +166,13 @@ function initSliderControls() {
     });
 }
 
-// Datos de renders (20 imágenes)
+// Datos de renders (detección automática)
 const renders = [];
-for (let i = 1; i <= 20; i++) {
+const totalRenders = 24; // Solo cambias este número cuando agregues más
+for (let i = 1; i <= totalRenders; i++) {
     renders.push({
         id: i,
-        image: `images/renders/render_${i}.png`, // Ajusta la extensión según tus archivos
+        image: `images/renders/render_${i}.png`,
         title: `Render ${i}`
     });
 }
