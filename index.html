@@ -41,6 +41,39 @@
             </div>
         </section>
 
+        <!-- Sección de Renders (entre Hero y Projects) -->
+        <section id="renders" class="renders">
+            <div class="container">
+                <h2>Modelado 3D</h2>
+                <p class="section-subtitle">Galería de renders de proyectos de modelado 3D</p>
+                
+                <!-- Slider de renders -->
+                <div class="slider-container renders-slider">
+                    <div class="slider-track" id="rendersTrack">
+                        <!-- Los renders se cargarán dinámicamente -->
+                    </div>
+                    
+                    <!-- Botones de navegación -->
+                    <button class="slider-btn prev-btn" id="rendersPrevBtn">❮</button>
+                    <button class="slider-btn next-btn" id="rendersNextBtn">❯</button>
+                </div>
+                
+                <!-- Puntos/dots -->
+                <div class="slider-dots" id="rendersDots"></div>
+            </div>
+        </section>
+
+        <!-- Modal para ver imagen ampliada -->
+        <div class="modal" id="imageModal">
+            <span class="modal-close" id="modalClose">&times;</span>
+            <img class="modal-content" id="modalImage" src="" alt="Render 3D">
+            <div class="modal-nav">
+                <button class="modal-btn modal-prev" id="modalPrev">❮</button>
+                <button class="modal-btn modal-next" id="modalNext">❯</button>
+            </div>
+            <div class="modal-counter" id="modalCounter"></div>
+        </div>
+
         <section id="work" class="projects">
             <div class="container">
                 <h2>Proyectos Destacados</h2>

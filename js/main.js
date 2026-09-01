@@ -166,15 +166,231 @@ function initSliderControls() {
     });
 }
 
-// Inicialización
+// Datos de renders (20 imágenes)
+const renders = [];
+for (let i = 1; i <= 20; i++) {
+    renders.push({
+        id: i,
+        image: `images/renders/render_${i}.png`, // Ajusta la extensión según tus archivos
+        title: `Render ${i}`
+    });
+}
+
+let renderIndex = 0;
+let renderAutoPlayInterval;
+
+// Renderizar slider de renders
+function renderRendersSlider() {
+    const track = document.getElementById('rendersTrack');
+    const dotsContainer = document.getElementById('rendersDots');
+    
+    if (!track) return;
+    
+    // Generar HTML de las tarjetas de renders
+    track.innerHTML = renders.map((render) => `
+        <div class="project-card render-card" data-id="${render.id}">
+            <img src="${render.image}" alt="${render.title}" class="project-image render-image" loading="lazy">
+            <div class="project-info">
+                <h3 class="project-title">${render.title}</h3>
+            </div>
+        </div>
+    `).join('');
+    
+    // Generar puntos
+    dotsContainer.innerHTML = Array.from({ length: renders.length }, (_, i) => `
+        <div class="dot ${i === renderIndex ? 'active' : ''}" data-index="${i}"></div>
+    `).join('');
+    
+    // Eventos de los puntos
+    document.querySelectorAll('#rendersDots .dot').forEach(dot => {
+        dot.addEventListener('click', (e) => {
+            const index = parseInt(e.target.dataset.index);
+            goToRenderSlide(index);
+            resetRenderAutoPlay();
+        });
+    });
+    
+    // Evento click en tarjetas para abrir modal
+    document.querySelectorAll('.render-card').forEach(card => {
+        card.addEventListener('click', function() {
+            const id = parseInt(this.dataset.id);
+            openModal(id);
+        });
+    });
+    
+    updateRenderSliderPosition();
+}
+
+// Actualizar posición del slider de renders
+function updateRenderSliderPosition() {
+    const track = document.getElementById('rendersTrack');
+    if (!track || track.children.length === 0) return;
+    
+    const cardWidth = track.children[0].offsetWidth;
+    const gap = 32;
+    const slideWidth = cardWidth + gap;
+    
+    track.style.transform = `translateX(-${renderIndex * slideWidth}px)`;
+    
+    document.querySelectorAll('#rendersDots .dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === renderIndex);
+    });
+}
+
+function goToRenderSlide(index) {
+    renderIndex = Math.max(0, Math.min(index, renders.length - 1));
+    updateRenderSliderPosition();
+}
+
+function nextRenderSlide() {
+    if (renderIndex < renders.length - 1) {
+        goToRenderSlide(renderIndex + 1);
+    } else {
+        goToRenderSlide(0);
+    }
+    resetRenderAutoPlay();
+}
+
+function prevRenderSlide() {
+    if (renderIndex > 0) {
+        goToRenderSlide(renderIndex - 1);
+    } else {
+        goToRenderSlide(renders.length - 1);
+    }
+    resetRenderAutoPlay();
+}
+
+// Autoplay para renders
+function startRenderAutoPlay() {
+    renderAutoPlayInterval = setInterval(() => {
+        nextRenderSlide();
+    }, 4000); // Cambia cada 4 segundos (más rápido que proyectos)
+}
+
+function resetRenderAutoPlay() {
+    clearInterval(renderAutoPlayInterval);
+    startRenderAutoPlay();
+}
+
+function stopRenderAutoPlay() {
+    clearInterval(renderAutoPlayInterval);
+}
+
+// Controles de renders
+function initRenderControls() {
+    const prevBtn = document.getElementById('rendersPrevBtn');
+    const nextBtn = document.getElementById('rendersNextBtn');
+    const sliderContainer = document.querySelector('.renders-slider');
+    
+    if (prevBtn) prevBtn.addEventListener('click', prevRenderSlide);
+    if (nextBtn) nextBtn.addEventListener('click', nextRenderSlide);
+    
+    if (sliderContainer) {
+        sliderContainer.addEventListener('mouseenter', stopRenderAutoPlay);
+        sliderContainer.addEventListener('mouseleave', startRenderAutoPlay);
+    }
+}
+
+// Modal para ver imagen ampliada
+let currentModalIndex = 0;
+
+function openModal(index) {
+    currentModalIndex = index;
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage');
+    const counter = document.getElementById('modalCounter');
+    
+    modal.style.display = 'flex';
+    modalImg.src = renders[index].image;
+    counter.textContent = `${index + 1} / ${renders.length}`;
+    
+    // Pausar autoplay de ambos sliders
+    stopAutoPlay();
+    stopRenderAutoPlay();
+}
+
+function closeModal() {
+    document.getElementById('imageModal').style.display = 'none';
+    // Reanudar autoplay
+    startAutoPlay();
+    startRenderAutoPlay();
+}
+
+function modalPrev() {
+    if (currentModalIndex > 0) {
+        openModal(currentModalIndex - 1);
+    } else {
+        openModal(renders.length - 1);
+    }
+}
+
+function modalNext() {
+    if (currentModalIndex < renders.length - 1) {
+        openModal(currentModalIndex + 1);
+    } else {
+        openModal(0);
+    }
+}
+
+// Event listeners del modal
+function initModalControls() {
+    const modal = document.getElementById('imageModal');
+    const closeBtn = document.getElementById('modalClose');
+    const prevBtn = document.getElementById('modalPrev');
+    const nextBtn = document.getElementById('modalNext');
+    
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (prevBtn) prevBtn.addEventListener('click', modalPrev);
+    if (nextBtn) nextBtn.addEventListener('click', modalNext);
+    
+    // Cerrar con tecla ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+        if (e.key === 'ArrowLeft' && modal.style.display === 'flex') modalPrev();
+        if (e.key === 'ArrowRight' && modal.style.display === 'flex') modalNext();
+    });
+    
+    // Cerrar al hacer clic fuera de la imagen
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+}
+
+// Inicialización mejorada
 document.addEventListener('DOMContentLoaded', () => {
+    // 1. Inicializar Render Slider
+    renderRendersSlider();
+    initRenderControls();
+    // El autoplay de renders se activa solo cuando la sección es visible
+    initRenderAutoplayOnVisibility();
+    
+    // 2. Inicializar Proyectos Slider
     renderSlider();
     initSliderControls();
-    startAutoPlay();
+    // El autoplay de proyectos se activa solo cuando la sección es visible
+    initProjectsAutoplayOnVisibility();
+    
+    // 3. Inicializar Modal (independiente)
+    initModalControls();
+    
+    // 4. Funciones de navegación y UI
     initSmoothScrolling();
     initMobileMenu();
     initHeaderScroll();
     initScrollAnimations();
+    
+    // 5. Pausar autoplays al abrir el modal
+    const modal = document.getElementById('imageModal');
+    if (modal) {
+        modal.addEventListener('shown', () => {
+            stopRenderAutoPlay();
+            stopAutoPlay();
+        });
+        modal.addEventListener('hidden', () => {
+            startRenderAutoPlay();
+            startAutoPlay();
+        });
+    }
 });
 
 // Funciones previas que mantienes
@@ -235,4 +451,96 @@ function initScrollAnimations() {
         section.style.transition = 'all 0.6s ease';
         observer.observe(section);
     });
+}
+
+// --- Funciones para Autoplay Inteligente ---
+
+// Variables para controlar si las secciones son visibles
+let rendersSectionVisible = false;
+let projectsSectionVisible = false;
+
+// Iniciar autoplay de renders solo cuando la sección es visible
+function initRenderAutoplayOnVisibility() {
+    const section = document.getElementById('renders');
+    if (!section) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                rendersSectionVisible = true;
+                startRenderAutoPlay();
+            } else {
+                rendersSectionVisible = false;
+                stopRenderAutoPlay();
+            }
+        });
+    }, { threshold: 0.3 }); // Se activa cuando al menos el 30% de la sección es visible
+
+    observer.observe(section);
+}
+
+// Iniciar autoplay de proyectos solo cuando la sección es visible
+function initProjectsAutoplayOnVisibility() {
+    const section = document.getElementById('work');
+    if (!section) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                projectsSectionVisible = true;
+                startAutoPlay();
+            } else {
+                projectsSectionVisible = false;
+                stopAutoPlay();
+            }
+        });
+    }, { threshold: 0.3 });
+
+    observer.observe(section);
+}
+
+// Sobrescribimos las funciones de reset para que solo se activen si la sección es visible
+const originalResetRenderAutoPlay = resetRenderAutoPlay;
+resetRenderAutoPlay = function() {
+    clearInterval(renderAutoPlayInterval);
+    if (rendersSectionVisible) {
+        startRenderAutoPlay();
+    }
+};
+
+const originalResetAutoPlay = resetAutoPlay;
+resetAutoPlay = function() {
+    clearInterval(autoPlayInterval);
+    if (projectsSectionVisible) {
+        startAutoPlay();
+    }
+};
+
+// Mejorar función openModal para que notifique al slider
+function openModal(index) {
+    currentModalIndex = index;
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage');
+    const counter = document.getElementById('modalCounter');
+    
+    modal.style.display = 'flex';
+    modalImg.src = renders[index].image;
+    counter.textContent = `${index + 1} / ${renders.length}`;
+    
+    // Disparar evento personalizado para que otros componentes sepan que el modal está abierto
+    const event = new Event('shown');
+    modal.dispatchEvent(event);
+    
+    // Pausar autoplays al abrir el modal
+    stopAutoPlay();
+    stopRenderAutoPlay();
+}
+
+function closeModal() {
+    const modal = document.getElementById('imageModal');
+    modal.style.display = 'none';
+    
+    // Disparar evento personalizado para reanudar
+    const event = new Event('hidden');
+    modal.dispatchEvent(event);
 }
