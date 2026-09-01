@@ -294,6 +294,7 @@ function initRenderControls() {
 // Modal para ver imagen ampliada
 let currentModalIndex = 0;
 
+// Mejorar función openModal para que notifique al slider
 function openModal(index) {
     currentModalIndex = index;
     const modal = document.getElementById('imageModal');
@@ -304,16 +305,22 @@ function openModal(index) {
     modalImg.src = renders[index].image;
     counter.textContent = `${index + 1} / ${renders.length}`;
     
-    // Pausar autoplay de ambos sliders
+    // Disparar evento personalizado para que otros componentes sepan que el modal está abierto
+    const event = new Event('shown');
+    modal.dispatchEvent(event);
+    
+    // Pausar autoplays al abrir el modal
     stopAutoPlay();
     stopRenderAutoPlay();
 }
 
 function closeModal() {
-    document.getElementById('imageModal').style.display = 'none';
-    // Reanudar autoplay
-    startAutoPlay();
-    startRenderAutoPlay();
+    const modal = document.getElementById('imageModal');
+    modal.style.display = 'none';
+    
+    // Disparar evento personalizado para reanudar
+    const event = new Event('hidden');
+    modal.dispatchEvent(event);
 }
 
 function modalPrev() {
@@ -515,32 +522,3 @@ resetAutoPlay = function() {
         startAutoPlay();
     }
 };
-
-// Mejorar función openModal para que notifique al slider
-function openModal(index) {
-    currentModalIndex = index;
-    const modal = document.getElementById('imageModal');
-    const modalImg = document.getElementById('modalImage');
-    const counter = document.getElementById('modalCounter');
-    
-    modal.style.display = 'flex';
-    modalImg.src = renders[index].image;
-    counter.textContent = `${index + 1} / ${renders.length}`;
-    
-    // Disparar evento personalizado para que otros componentes sepan que el modal está abierto
-    const event = new Event('shown');
-    modal.dispatchEvent(event);
-    
-    // Pausar autoplays al abrir el modal
-    stopAutoPlay();
-    stopRenderAutoPlay();
-}
-
-function closeModal() {
-    const modal = document.getElementById('imageModal');
-    modal.style.display = 'none';
-    
-    // Disparar evento personalizado para reanudar
-    const event = new Event('hidden');
-    modal.dispatchEvent(event);
-}
