@@ -189,7 +189,7 @@ const renderProjects = [
         description: 'Modelos humanoides de jugador y NPC, topología en low-poly y con rigging de Mixamo'
     },
     {
-        id: 'sci-fi_build',
+        id: 'scifi',
         title: 'Fortaleza Sci-fi',
         folder: 'sci-fi_build',
         total: 4,
