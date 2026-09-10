@@ -174,8 +174,8 @@ const renderProjects = [
         id: 'sturmpanzer',
         title: 'Sturmpanzer 4',
         folder: 'sturmpanzer',
+        prefix: 'sturmpanzer',      // Prefijo de los archivos
         total: 15,
-        start: 1,
         tags: ['Blender', '3ds Max', 'Hard Surfaces', 'Historical', 'Game Asset'],
         description: 'Trabajo en proceso: modelo hecho con seguimiento de planos de blueprints, optimizado para videojuegos, dándole un alto nivel de detalle con mallas de bajo poligonaje (low-poly)'
     },
@@ -183,17 +183,17 @@ const renderProjects = [
         id: 'survivors',
         title: 'Survivors Haven',
         folder: 'survivors',
+        prefix: 'survivors',
         total: 5,
-        start: 16,
         tags: ['Blender', 'Unity', 'Rigging', 'Organic Surface', 'Human Model', 'Gameplay'],
         description: 'Modelos humanoides de jugador y NPC, topología en low-poly y con rigging de Mixamo'
     },
     {
         id: 'scifi',
         title: 'Fortaleza Sci-fi',
-        folder: 'sci-fi_build',
+        folder: 'sci-fi_build',      // Nombre real de la carpeta
+        prefix: 'scifi_build',       // Prefijo de los archivos
         total: 4,
-        start: 21,
         tags: ['Blender', 'Sci-Fi', 'Environment Modeling', 'Hard Surface', 'Modular Asset'],
         description: 'Trabajo en proceso: modelo de estructura futurista con alto nivel de detalle y poligonaje.'
     }
@@ -205,12 +205,11 @@ const renderProjects = [
 const rendersData = {};
 renderProjects.forEach(project => {
     rendersData[project.id] = [];
-    for (let i = 0; i < project.total; i++) {
-        const num = project.start + i;
+    for (let i = 1; i <= project.total; i++) {
         rendersData[project.id].push({
-            id: num,
-            image: `images/renders/${project.folder}/render_${num}.png`,
-            title: `${project.title} - Render ${i + 1}`
+            id: i,
+            image: `images/renders/${project.folder}/${project.prefix}_${i}.png`,
+            title: `${project.title} - Render ${i}`
         });
     }
 });
